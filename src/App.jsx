@@ -5,7 +5,7 @@ import Error from "./pages/Error";
 import SingleProduct, {
   loader as singleProductLoader,
 } from "./pages/SingleProduct";
-import Products from "./pages/Products";
+import Products, { loader as productsLoader } from "./pages/Products";
 import Register from "./pages/Register";
 import Orders from "./pages/Orders";
 import HomeLayout from "./pages/HomeLayout";
@@ -26,10 +26,16 @@ const router = createBrowserRouter([
         errorElement: <ErrorElement />,
         loader: landingLoader,
       },
-      { path: "/products", element: <Products /> },
+      {
+        path: "/products",
+        element: <Products />,
+        errorElement: <ErrorElement />,
+        loader: productsLoader,
+      },
       {
         path: "/products/:id",
         element: <SingleProduct />,
+        errorElement: <ErrorElement />,
         loader: singleProductLoader,
       },
       { path: "/cart", element: <Cart /> },

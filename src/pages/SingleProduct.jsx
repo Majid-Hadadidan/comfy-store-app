@@ -1,6 +1,11 @@
-import { useLoaderData, Link } from "react-router-dom";
-import { customFetch, formatPrice } from "../utils";
 import { useState } from "react";
+import { useLoaderData, Link } from "react-router-dom";
+import {
+  customFetch,
+  formatPrice,
+  generateAmountOption
+} from "../utils/index.jsx";
+
 
 //loader function for singleProduct
 export const loader = async ({ params }) => {
@@ -34,7 +39,7 @@ function SingleProduct() {
         </ul>
       </div>
       {/* PRODUCT */}
-      <div className='mt-6 grid gap-y-8 lg:grid-cols-2  lg:gap-x-16'>
+      <div className="mt-6 grid gap-y-8 lg:grid-cols-2  lg:gap-x-16">
         {/* IMAGE */}
         <img
           src={image}
@@ -71,20 +76,18 @@ function SingleProduct() {
             </div>
           </div>
           {/* AMOUNT */}
-          <div className='form-control w-full max-w-xs'>
-            <label className='label'>
-              <h4 className='text-md font-medium tracking-wider capitalize'>
+          <div className="form-control w-full max-w-xs">
+            <label className="label">
+              <h4 className="text-md font-medium tracking-wider capitalize">
                 amount
               </h4>
             </label>
             <select
-              className='select select-secondary select-bordered select-md'
+              className="select select-secondary select-bordered select-md"
               value={amount}
               onChange={handleAmount}
             >
-              <option value={1}>1</option>
-              <option value={2}>2</option>
-              <option value={3}>3</option>
+             {generateAmountOption(5)}
             </select>
           </div>
 

@@ -1,5 +1,5 @@
 import Hero from "../components/Hero";
-import { customFetch } from "../utils";
+import { customFetch } from "../utils/index.jsx";
 import FeaturedProducts from "../components/FeaturedProducts";
 
 const url = "/products?featured=true";
