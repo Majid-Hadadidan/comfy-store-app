@@ -2525,6 +2525,7 @@ const PaginationContainer = () => {
   const navigate = useNavigate();
 
   const handlePageChange = (pageNumber) => {
+    
     const searchParams = new URLSearchParams(search);
     searchParams.set('page', pageNumber);
     navigate(`${pathname}?${searchParams.toString()}`);
@@ -3021,7 +3022,28 @@ const cartSlice = createSlice({
       cartSlice.caseReducers.calculateTotals(state);
       toast.success('Cart updated');
     },
+// editItem create by Gemini*****************************
+مشکلات و بهبودها
+فراخوانی مستقیم calculateTotals: همانطور که قبلاً اشاره شد، فراخوانی مستقیم caseReducers توصیه نمی‌شود. بهتر است یک اکشن برای محاسبه مجدد کل‌ها دیسپچ کنید.
+عدم بررسی تغییرات: کد فعلی بدون بررسی اینکه آیا تعداد آیتم تغییر کرده است، محاسبات را انجام می‌دهد. بهتر است ابتدا بررسی کنید که آیا amount با item.amount متفاوت است و سپس محاسبات را انجام دهید.
 
+
+
+این کد بهبود یافته بررسی می‌کند که آیا تعداد آیتم واقعاً تغییر کرده است یا خیر، و سپس محاسبات و به‌روزرسانی‌ها را انجام می‌دهد. همچنین، توصیه می‌شود به جای فراخوانی مستقیم calculateTotals، یک اکشن برای محاسبه مجدد دیسپچ کنید.
+editItem: (state, action) => {
+  const { cartID, amount } = action.payload;
+  const item = state.cartItems.find((i) => i.cartID === cartID);
+
+  if (amount !== item.amount) {
+    state.numItemsInCart += amount - item.amount;
+    state.cartTotal += item.price * (amount - item.amount);
+    item.amount = amount;
+    dispatch(calculateTotalsAction()); // بهتر است یک اکشن برای محاسبه مجدد دیسپچ کنید
+  }
+
+  toast.success('Cart updated');
+},
+// **********************************************************
     calculateTotals: (state) => {
       state.tax = 0.1 * state.cartTotal;
       state.orderTotal = state.cartTotal + state.shipping + state.tax;
