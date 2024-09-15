@@ -43,7 +43,7 @@ function CartItem({ cartItem }) {
         </p>
       </div>
 
-      <div className="sm:ml-24">
+      <div className="sm:ml-12">
         {/* AMOUNT */}
         <div className="form-control max-w-xs">
           <label htmlFor="amount" className="label p-0">

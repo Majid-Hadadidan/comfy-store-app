@@ -1,38 +1,19 @@
-import { useEffect, useState } from "react";
 import { BsCart3, BsMoonFill, BsSunFill } from "react-icons/bs";
 import { FaBarsStaggered } from "react-icons/fa6";
 import { NavLink } from "react-router-dom";
 import NavLinks from "./NavLinks";
 import { useSelector } from "react-redux";
-
+import { useDispatch } from "react-redux";
+import { toggleTheme } from "../store/user/userSlice";
 //theme
-const themes = {
-  winter: "winter",
-  dracula: "dracula",
-};
-
-const getThemeFromLocalStorage = () =>
-  localStorage.getItem("theme") || themes.winter;
 
 function NavBar() {
-  const [theme, setTheme] = useState(getThemeFromLocalStorage());
-
   //useSelector of redux
   const numItemsInCart = useSelector((state) => state.cartState.numItemsInCart);
-
-  //useEffect for save theme to lacalStorage
-  useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem("theme", theme);
-  }, [theme]);
-
+  const dispatch = useDispatch();
   //handleTheme function called when click checkBox button for theme
   const handleTheme = () => {
-    setTheme(() => {
-      const { winter, dracula } = themes;
-      const newTheme = theme === winter ? dracula : winter;
-      return newTheme;
-    });
+    dispatch(toggleTheme());
   };
 
   //JSX for NavBar

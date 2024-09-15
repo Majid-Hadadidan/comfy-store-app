@@ -6,8 +6,8 @@ import SectionTitle from "../components/UI/SectionTitle";
 
 function Cart() {
   const numItemInCart = useSelector((state) => state.cartState.numItemInCart);
-  let user = null;
-  if (numItemInCart === 0) {
+  const user = useSelector((state) => state.userState.user);
+    if (numItemInCart === 0) {
     return <SectionTitle text="Your cart is empty" />;
   }
   return (
