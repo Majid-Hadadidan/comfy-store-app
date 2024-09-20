@@ -1,19 +1,19 @@
 import About from "./pages/About";
 import Checkout from "./pages/Checkout";
-import Login from "./pages/Login";
+import Login, { action as loginAction } from "./pages/Login";
 import Error from "./pages/Error";
 import SingleProduct, {
   loader as singleProductLoader,
 } from "./pages/SingleProduct";
 import Products, { loader as productsLoader } from "./pages/Products";
-import Register from "./pages/Register";
+import Register, { action as registerAction } from "./pages/Register";
 import Orders from "./pages/Orders";
 import HomeLayout from "./pages/HomeLayout";
 import Landing, { loader as landingLoader } from "./pages/Landing";
 import Cart from "./pages/Cart";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import ErrorElement from "./components/UI/ErrorElement";
-
+import {store} from './store/store'
 const router = createBrowserRouter([
   {
     path: "/",
@@ -44,8 +44,18 @@ const router = createBrowserRouter([
       { path: "/orders", element: <Orders /> },
     ],
   },
-  { path: "/login", element: <Login />, errorElement: <Error /> },
-  { path: "/register", element: <Register />, errorElement: <Error /> },
+  {
+    path: "/login",
+    element: <Login />,
+    errorElement: <Error />,
+    action: loginAction(store),
+  },
+  {
+    path: "/register",
+    element: <Register />,
+    errorElement: <Error />,
+    action: registerAction,
+  },
 ]);
 
 function App() {

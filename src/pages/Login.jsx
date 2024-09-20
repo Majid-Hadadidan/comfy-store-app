@@ -1,6 +1,28 @@
 import FormInput from "../components/UI/FormInput";
 import SubmitBtn from "../components/UI/SubmitBtn";
-import { Form, Link } from "react-router-dom";
+import { Form, Link, redirect } from "react-router-dom";
+import { customFetch } from "../utils";
+import { toast } from "react-toastify";
+import { loginUser } from "../store/user/userSlice";
+
+export const action =
+  (store) =>
+  async ({ request }) => {
+    const formData = await request.formData();
+    const data = Object.fromEntries(formData);
+    try {
+      const response = await customFetch.post("/auth/local", data);
+      store.dispatch(loginUser(response.data));
+      toast.success("logged in successfully");
+      return redirect("/");
+    } catch (error) {
+      const errorMessage =
+        error?.response?.data?.error?.message ||
+        "please double check your credentials";
+      toast.error(errorMessage);
+      return null;
+    }
+  };
 
 function Login() {
   return (
@@ -29,8 +51,11 @@ function Login() {
           guest user
         </button>
         <p className="text-center">
-          Not a member yet? 
-          <Link to="/register" className=" font-semibold ml-2 link link-hover link-primary capitalize">
+          Not a member yet?
+          <Link
+            to="/register"
+            className=" font-semibold ml-2 link link-hover link-primary capitalize"
+          >
             Register
           </Link>
         </p>
